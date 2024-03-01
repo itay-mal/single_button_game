@@ -25,6 +25,7 @@ class BugManager:
         self.screen = screen
         self.height = height
         self.previouse_spawn = time.time()
+        self.spawn_freq = 1
 
     def spawn_bug(self, limit_left: int, limit_right: int):
         self.bugs.append(Bug(self.screen, random.randint(limit_left,limit_right),-3,3))
@@ -33,13 +34,12 @@ class BugManager:
                limit_right: int, 
                player_x: int, player_y: int,
                player_w: int, player_h: int):
-        if time.time() - self.previouse_spawn > 0.5:
+        if time.time() - self.previouse_spawn > self.spawn_freq:
             self.spawn_bug(limit_left, limit_right)
             self.previouse_spawn = time.time()
 
         for b in self.bugs:
             b.update()
-            print(len(self.bugs))
             if (abs(player_x - b.pos_x) < (player_w/2 + b.radius) 
                 and abs(player_y - b.pos_y) < (player_h/2 + b.radius)):
                 return True

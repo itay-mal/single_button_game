@@ -1,5 +1,6 @@
 import pygame
-from typing import List
+from typing import List, Tuple
+import random
 
 class WallManager:
     def __init__(self, screen:pygame.Surface,
@@ -10,15 +11,37 @@ class WallManager:
         self.screen_width = screen_width
         self.wall_height = wall_height
         self.wall_speed  = wall_speed
-        self.walls: List[Wall] = []
+        self.walls: List[Tuple[Wall, Wall]] = []
+        self.left_edge = 0
+        self.right_edge = screen_width
+        self.wall_pace = 3
     
-    def show(self):
-        for w in self.walls:
-            w.show()
+    def show(self) -> None:
+        for left_wall, right_wall in self.walls:
+            left_wall.show()
+            right_wall.show()
     
-    def update(self):
-        for w in self.walls:
-            w.update()
+    def update(self, player_x: int, player_y: int,
+               player_w: int, player_h: int) -> bool:
+        for left_wall, right_wall in self.walls:
+            left_wall.update()
+            right_wall.update()
+        
+        diff = random.randint(-self.wall_pace,self.wall_pace)
+        self.left_edge = max(0,self.left_edge + diff)
+        self.right_edge = min(self.screen_width,self.right_edge + diff)
+        self.walls.insert(0,(Wall(self.screen, 0, self.left_edge, self.wall_height, self.wall_speed),
+                             Wall(self.screen, self.right_edge, self.screen_width, self.wall_height, self.wall_speed)))
+        
+        # check wall collision
+        wall_collision = False
+        for w_l,w_r in filter(lambda x: (x[0].y_top + x[0].height) >= player_y-(player_h/2) ,self.walls):
+            wall_collision = ((player_x - player_w/2) < w_l.x_right) or ((player_x + player_w/2) > w_r.x_left)
+        
+        # disccard off-screen walls
+        self.walls = [ws for ws in self.walls if ws[0].y_top < self.screen_height]
+
+        return wall_collision
 
 class Wall:
     def __init__(self, screen:pygame.Surface, x_left: int, x_right: int, 
@@ -30,10 +53,10 @@ class Wall:
         self.height = height
         self.speed = speed
 
-    def show(self):
+    def show(self) -> None:
         rect = pygame.Rect(self.x_left,self.y_top,
                            self.x_right-self.x_left,self.height)
         pygame.draw.rect(self.screen, (255,255,255), rect)
     
-    def update(self):
+    def update(self) -> None:
         self.y_top += self.speed
