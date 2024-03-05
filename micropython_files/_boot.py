@@ -11,6 +11,7 @@ from bug import BugManager
 from walls import WallManager
 from scoreboard import ScoreBoard
 from beeper import game_over_tune, buzz
+from bitmaps import welcome_screen_x_bmp, welcome_screen_y_bmp
 import time
 f = Font(screen)
 
@@ -22,8 +23,8 @@ while True:
 
     # hold until user first click
     screen.fill(0)
-    f.text("Press",32,5, 24)
-    f.text("Button",25,35, 24)
+    for x,y in zip(welcome_screen_x_bmp, welcome_screen_y_bmp):
+            screen.pixel(x, y,1)
     screen.show()
     
     while True:
@@ -73,7 +74,7 @@ while True:
             fp.write(f"{scoreboard.score}")
         f.text("New Highscore!",5,17,10)
     f.text(f"score: {scoreboard.score}",5,34,10)
-    f.text(f"highscore: {high_score}",5,50,10)
+    f.text(f"high: {high_score}",5,50,10)
     screen.show()
     game_over_tune()
     while True:
