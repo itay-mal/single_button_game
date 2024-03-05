@@ -1,8 +1,8 @@
 import pygame
-from player import Player
-from bug import BugManager
-from walls import WallManager
-from scoreboard import ScoreBoard
+from pygame.player import Player
+from pygame.bug import BugManager
+from pygame.walls import WallManager
+from pygame.scoreboard import ScoreBoard
 import time
 pygame.init()
 pygame.font.init()

@@ -1,7 +1,7 @@
 import random
 
 class WallManager:
-    def __init__(self, screen:pygame.Surface,
+    def __init__(self, screen,
                  screen_height: int, screen_width: int, 
                  wall_height: int = 6, wall_speed: int = 3) -> None:
         self.screen = screen
@@ -12,12 +12,19 @@ class WallManager:
         self.walls = []
         self.left_edge = 0
         self.right_edge = screen_width
-        self.wall_pace = 3
+        self.wall_pace = 5
     
     def show(self) -> None:
         for left_wall, right_wall in self.walls:
             left_wall.show()
             right_wall.show()
+    
+    def expand_walls(self, expand_by: int = 20):
+        self.left_edge = max(self.left_edge - expand_by, 0)
+        self.right_edge = min(self.right_edge + expand_by, self.screen_width)
+        # for lw, rw in self.walls:
+        #     lw.x_right = max(self.left_edge - expand_by, 0)
+        #     rw.x_left = min(self.right_edge + expand_by, self.screen_width)
     
     def update(self, player_x: int, player_y: int,
                player_w: int, player_h: int) -> bool:
@@ -42,7 +49,7 @@ class WallManager:
         return wall_collision
 
 class Wall:
-    def __init__(self, screen:pygame.Surface, x_left: int, x_right: int, 
+    def __init__(self, screen, x_left: int, x_right: int, 
                  height: int = 6, speed: int = 3) -> None:
         self.screen = screen
         self.y_top = -height

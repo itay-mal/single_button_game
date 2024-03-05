@@ -23,6 +23,7 @@ def buzz(duration_ms, frequency, quiet_ms):
     buzzer_pwm.duty(512)        # Set the PWM duty cycle (50% for a beep)
     sleep_ms(duration_ms)
     buzzer_pwm.duty(0)
+    sleep_ms(quiet_ms)
     
 def game_over_tune():
     tune = [(400, 494, 0),  # B4
@@ -39,6 +40,16 @@ def game_over_tune():
             (100, 139, 0)]   # C#3
     for t,f,s in tune:
         buzz(t,f,s)
-        
 
-    
+def extra_life_buzz():
+    buzz(20,600,40)
+    buzz(20,600,0)
+
+def life_lost_buzz():
+    buzz(20,400,0)
+
+def wall_expand_buzz():
+    buzz(30,400,0)
+    buzz(30,450,0)
+    buzz(30,550,0)
+

@@ -13,6 +13,8 @@ class ScoreBoard:
         self.box_height = 10
         self.last_score_add = time.time()
         self.screen_width = screen_width
+        self.bug_coll_p = False
+        self.extra_life_coll_p = False
 
     def show(self) -> None:
         # lives
@@ -30,8 +32,9 @@ class ScoreBoard:
         text = font.render(f"{self.score:05}", False, (255,255,255), (0,0,0))
         self.screen.blit(text, textRect)
 
-    def update(self, wall_coll:bool, bug_coll:bool) -> bool:
+    def update(self, wall_coll:bool, bug_coll:bool, extra_life_coll: bool) -> bool:
         self.lives -= bug_coll and not self.bug_coll_p
+        self.lives += extra_life_coll and not self.extra_life_coll_p and self.lives < 3
         self.bug_coll_p = bug_coll
         if time.time() - self.last_score_add > 1:
             self.score += 1

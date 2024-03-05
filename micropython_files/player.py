@@ -1,7 +1,7 @@
 import time
 from bitmaps import cat_1_l_bmp, cat_2_l_bmp, cat_1_r_bmp, cat_2_r_bmp
 class Player:
-    def __init__(self, screen: pygame.Surface, 
+    def __init__(self, screen, 
                  init_x: int, init_y: int, 
                  speed_x: int = 3) -> None:
         self.pos_x = init_x

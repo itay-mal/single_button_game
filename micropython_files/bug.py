@@ -3,7 +3,7 @@ import time
 from bitmaps import bug_bmp
 
 class Bug:
-    def __init__(self, screen: pygame.Surface, 
+    def __init__(self, screen, 
                  init_x: int, init_y: int = 0, 
                  speed_y: int = 3) -> None:
         self.pos_x = init_x
@@ -25,7 +25,7 @@ class Bug:
     
     
 class BugManager:
-    def __init__(self, screen: pygame.surface, height) -> None:
+    def __init__(self, screen, height) -> None:
         self.bugs = []
         self.screen = screen
         self.height = height
@@ -54,4 +54,3 @@ class BugManager:
     def show(self):
         for b in self.bugs:
             b.show()
-            
