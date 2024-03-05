@@ -1,12 +1,11 @@
 # Single Button Game 🎮
 
 A Single Button Game - dedicated to run on ESP32 micropython  
-Starting by implementing in pygame  
 
-## TODO 📃
+## To Use
 
-- finish walls appearance and behavior
-- implement scoring system
-- implement lives system
-- implement pretty graphics
-- consider difficulty increase mechanisms
+Upload files in [micropyton_files](/micropython_files/) to a microcontroller flashed with [micropython](https://github.com/micropython/micropython/tree/master) firmware.
+
+## In Game Photos
+
+Coming Soon ⏳
