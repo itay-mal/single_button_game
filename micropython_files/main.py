@@ -10,7 +10,7 @@ from player import Player
 from collectibles import MultiCollectibleManager
 from walls import WallManager
 from scoreboard import ScoreBoard
-from beeper import game_over_tune, wall_expand_buzz
+from beeper import new_highscore_tune, wall_expand_buzz, game_over_tune, start_screen_tune
 from bitmaps import welcome_screen_x_bmp, welcome_screen_y_bmp
 import time
 f = Font(screen)
@@ -26,7 +26,7 @@ try:
         for x,y in zip(welcome_screen_x_bmp, welcome_screen_y_bmp):
                 screen.pixel(x, y,1)
         screen.show()
-        
+        start_screen_tune()
         while True:
             if button.value() == 1:
                 break
@@ -81,7 +81,10 @@ try:
         f.text(f"score: {scoreboard.score}",5,34,10)
         f.text(f"high: {high_score}",5,50,10)
         screen.show()
-        game_over_tune()
+        if scoreboard.score > high_score:
+            new_highscore_tune()
+        else:
+            game_over_tune()
         while True:
             if button.value() == 0:
                 break
